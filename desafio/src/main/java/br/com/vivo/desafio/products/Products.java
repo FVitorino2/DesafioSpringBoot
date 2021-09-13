@@ -1,16 +1,22 @@
 package br.com.vivo.desafio.products;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Entity
 public class Products {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String description;
-	private double price = 2000;
+	private double price;
+	
+	public Products() {
+		
+	}
 	
 	public Products(String name, String description, double price) {
 		this.name = name;
@@ -18,22 +24,6 @@ public class Products {
 		this.price = price;
 	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Products other = (Products) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
 	
 	public String getName() {
 		return name;
