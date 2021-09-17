@@ -4,6 +4,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.NumberFormat;
+
 import br.com.vivo.desafio.products.Products;
 import br.com.vivo.desafio.repository.ProductsRepository;
 
@@ -13,7 +15,7 @@ public class UpdateProductsInput {
 	private String name;
 	@NotNull @NotEmpty
 	private String description;
-	@NotNull @Min(0)
+	@NotNull @Min(0) @NumberFormat
 	private double price;
 	
 	public String getName() {
@@ -35,8 +37,8 @@ public class UpdateProductsInput {
 		this.price = price;
 	}
 
-	public Products update(Long id, ProductsRepository productsrep) {
-		Products products = productsrep.getOne(id);
+	public Products update(String id, ProductsRepository productsrep) {
+		Products products = productsrep.getById(id);
 		products.setName(this.name);
 		products.setDescription(this.description);
 		products.setPrice(this.price);

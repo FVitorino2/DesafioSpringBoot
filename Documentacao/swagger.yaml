@@ -1,0 +1,162 @@
+swagger: "2.0"
+info:
+  description: "API para cadastro e manutenção de Produtos"
+  version: "1.0.0"
+  title: "MS Products"
+  contact:
+    email: "felipe.vitorino@telefonica.com"
+
+# Added by API Auto Mocking Plugin
+host: "localhost:9999"
+basePath: /
+schemes:
+ - http
+    
+
+paths:
+  
+  /products:
+    post:
+      summary: "Cria novo produto"
+      operationId: "criarProduto"
+      description: "endpoint *cria o* produto."
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "product"
+        description: "Informações do produto."
+        required: true
+        schema:
+          $ref: "#/definitions/Products"
+      responses:
+        201:
+          description: "Novo produto criado."
+          schema:
+            $ref: "#/definitions/Products"
+          headers:
+            Location:
+              type: "string"
+              description: "uri do novo cliente."
+  
+  /products/{id}:
+    get:
+      summary: "Busca de produto"
+      operationId: "buscaProdutoporId"
+      description: "|
+        endpoint busca o produto."
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Products"
+          headers: {}
+          
+  /products/:
+    get:
+      summary: "Busca de produto"
+      operationId: "buscaProduto"
+      description: "|
+        endpoint busca o produto."
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Products"
+            
+  /products/search:
+    get:
+      summary: "Filtra produto"
+      operationId: "filtraProduto"
+      description: "|
+        endpoint filtra o produto."
+      produces:
+      - "application/json"
+      parameters:
+        - name: q
+          in: query
+          type: string
+        - name: min_price
+          in: query
+          type: number
+        - name: max_price
+          in: query
+          type: number        
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Products"          
+  /products{id}:  
+    put:
+      summary: "Altera Produto"
+      operationId: "alteraProduto"
+      description: "|
+        endpoint *altera o* Produto."
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int32"
+      - in: "body"
+        name: "product"
+        description: "Informações do produto."
+        required: true
+        schema:
+          $ref: "#/definitions/Products"
+      responses:
+        200:
+          description: "Produto alterado."
+          schema:
+            $ref: "#/definitions/Products"
+    
+    delete:
+      summary: "Remove o produto"
+      description: "|
+        endpoint *remove o* produto."
+      operationId: "removerProduto"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "Produto removido."
+          
+definitions:
+  Products:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        description: "Id do cliente."
+      name:
+        type: "string"
+        description: "Nome do cliente"
+      description:
+        type: "string"
+        description: "Sobrenome do cliente"
+      price:
+        type: number
+        minimum: 0
+        description: "Status do cliente"

@@ -3,11 +3,13 @@ package br.com.vivo.desafio;
 import java.net.URI;
 import java.util.List;
 
+
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,14 +33,15 @@ public class ProductsController {
 
 	@Autowired
 	private ProductsRepository productsRep;
-	 
-	@GetMapping
-	public List<Products> lista (String name) {
-		if(name == null) {
+	
+	@GetMapping("/search")
+	@Nullable
+	public List<Products> lista (String q, double min_price , double max_price) {
+		if(q == null || max_price == 0) {
 		List<Products> products = productsRep.findAll();
 		return (products);
 	} else {
-		List<Products> products = productsRep.findByname(name);
+		List<Products> products = productsRep.findBysearch(q, min_price, max_price);
 		return (products);		
 	}
   }
@@ -53,22 +56,22 @@ public class ProductsController {
 }
 
 	@GetMapping("/{id}")
-	public ProductsDto detail(@PathVariable Long id) {
-		Products products = productsRep.getOne(id);
+	public ProductsDto detail(@PathVariable String id) {
+		Products products = productsRep.getById(id);
 		return new ProductsDto(products);
 		
 	}
 	
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<ProductsDto> update(@PathVariable Long id, @RequestBody @Valid UpdateProductsInput input) {
+	public ResponseEntity<ProductsDto> update(@PathVariable String id, @RequestBody @Valid UpdateProductsInput input) {
 		Products products = input.update(id, productsRep);
 		
 		return ResponseEntity.ok(new ProductsDto(products));
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<ProductsDto> delete(@PathVariable Long id){
+	public ResponseEntity<ProductsDto> delete(@PathVariable String id){
 		productsRep.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
