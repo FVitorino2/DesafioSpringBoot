@@ -35,9 +35,8 @@ public class ProductsController {
 	private ProductsRepository productsRep;
 	
 	@GetMapping("/search")
-	@Nullable
 	public List<Products> lista (String q, double min_price , double max_price) {
-		if(q == null || max_price == 0) {
+		if(q == null) {
 		List<Products> products = productsRep.findAll();
 		return (products);
 	} else {
@@ -45,6 +44,14 @@ public class ProductsController {
 		return (products);		
 	}
   }
+	
+	@GetMapping
+	public List<Products> lista () {
+		List<Products> products = productsRep.findAll();
+		return (products);
+	}	
+	
+	
 
 	@PostMapping
 	public ResponseEntity<ProductsDto> cadastrar(@RequestBody @Valid ProductsInput input, UriComponentsBuilder uriBuilder) {
