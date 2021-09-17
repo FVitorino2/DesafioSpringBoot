@@ -35,13 +35,13 @@ public class ProductsController {
 	private ProductsRepository productsRep;
 	
 	@GetMapping("/search")
-	public List<Products> lista (String q, double min_price , double max_price) {
+	public List<Products> lista (String q, Double min_price , Double max_price) {
 		if(q == null) {
 		List<Products> products = productsRep.findAll();
 		return (products);
 	} else {
 		List<Products> products = productsRep.findBysearch(q, min_price, max_price);
-		return (products);		
+		return (products);
 	}
   }
 	

@@ -23,7 +23,6 @@ public class ErrorValidationHandler {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public List<FormErrorDto> handle(MethodArgumentNotValidException exception) {
 		List<FormErrorDto> dto = new ArrayList<>();
-		
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 		fieldErrors.forEach(e ->{
 			String message = messageSource.getMessage(e, LocaleContextHolder.getLocale());
