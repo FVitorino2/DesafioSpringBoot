@@ -7,7 +7,6 @@ import javax.persistence.Id;
 
 import br.com.vivo.desafio.dto.ProductsInput;
 
-
 @Entity
 public class Product {
 
@@ -16,8 +15,6 @@ public class Product {
 	private String name;
 	private String description;
 	private Double price;
-	
-
 	
 	public String getName() {
 		return name;
