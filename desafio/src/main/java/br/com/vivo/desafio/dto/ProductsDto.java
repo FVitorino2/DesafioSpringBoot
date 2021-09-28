@@ -1,22 +1,29 @@
 package br.com.vivo.desafio.dto;
 
-import br.com.vivo.desafio.products.Products;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import br.com.vivo.desafio.product.Product;
 
 public class ProductsDto {
 
-	private Long id;
+	private String id;
 	private String name;
 	private String description;
-	private double price;
+	private Double price;
 	
-	public ProductsDto(Products products) {
+	public ProductsDto(Product products) {
 		this.id = products.getId();
 		this.name = products.getName();
 		this.description = products.getDescription();
 		this.price = products.getPrice();
 	}
 	
-	public Long getId() {
+	public ProductsDto(ProductsDto products) {
+		
+	}
+
+	public String getId() {
 		return id;
 	}
 	public String getName() {
@@ -25,10 +32,13 @@ public class ProductsDto {
 	public String getDescription() {
 		return description;
 	}
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 	
+	public static List<ProductsDto> converter(List<Product> lista) {
+		return lista.stream().map(ProductsDto::new).collect(Collectors.toList());
+	}
 	
 	
 }
